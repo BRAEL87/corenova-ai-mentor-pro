@@ -5,8 +5,6 @@ const connectDB = require('./config/db');
 
 dotenv.config();
 
-connectDB();
-
 const app = express();
 
 app.use(express.json());
@@ -14,6 +12,17 @@ app.use(cors({
   origin: ['https://corenova-ai-mentor-pro-arag.vercel.app', 'http://localhost:5173'],
   credentials: true
 }));
+
+// Ensure database connection before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    res.status(503).json({ message: 'Database connection failed', error: error.message });
+  }
+});
 
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working correctly' });

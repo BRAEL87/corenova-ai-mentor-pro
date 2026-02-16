@@ -89,7 +89,7 @@ const Login = () => {
                 </form>
 
                 <p className="text-center text-slate-400 text-xs mt-8 capitalize">
-                    &copy; 2024 CoreNova HQ • Premium AI Solutions
+                    &copy; 2026 CoreNova HQ • Premium AI Solutions
                 </p>
             </div>
         </div>
