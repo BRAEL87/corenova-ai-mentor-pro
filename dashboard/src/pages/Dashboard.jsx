@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Users, MessageSquare, BookOpen, Activity, TrendingUp, Loader2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import API_BASE_URL from '../config';
 
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
@@ -11,7 +12,7 @@ const Dashboard = () => {
         const fetchStats = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const { data } = await axios.get('http://localhost:5000/api/admin/stats', {
+                const { data } = await axios.get(`${API_BASE_URL}/admin/stats`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(data);

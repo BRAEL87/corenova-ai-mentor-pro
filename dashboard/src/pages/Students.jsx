@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { User, Phone, Book, CheckCircle2, MoreVertical, Loader2, Send } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 const Students = () => {
     const [students, setStudents] = useState([]);
@@ -14,8 +15,8 @@ const Students = () => {
             try {
                 const token = localStorage.getItem('token');
                 const [studentRes, courseRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/admin/students', { headers: { Authorization: `Bearer ${token}` } }),
-                    axios.get('http://localhost:5000/api/admin/courses', { headers: { Authorization: `Bearer ${token}` } })
+                    axios.get(`${API_BASE_URL}/admin/students`, { headers: { Authorization: `Bearer ${token}` } }),
+                    axios.get(`${API_BASE_URL}/admin/courses`, { headers: { Authorization: `Bearer ${token}` } })
                 ]);
                 setStudents(studentRes.data);
                 setCourses(courseRes.data);
@@ -35,14 +36,14 @@ const Students = () => {
         setActionLoading(userId);
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/admin/send-welcome', {
+            await axios.post(`${API_BASE_URL}/admin/send-welcome`, {
                 userId,
                 courseId: selectedCourse
             }, { headers: { Authorization: `Bearer ${token}` } });
 
             alert('Welcome message sent successfully!');
             // Refresh student list to show updated course
-            const { data } = await axios.get('http://localhost:5000/api/admin/students', {
+            const { data } = await axios.get(`${API_BASE_URL}/admin/students`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setStudents(data);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Save, BookOpen, Brain, MessageSquare, Loader2, Sparkles } from 'lucide-react';
+import API_BASE_URL from '../config';
 
 const Settings = () => {
     const [courses, setCourses] = useState([]);
@@ -19,7 +20,7 @@ const Settings = () => {
         const fetchCourses = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const { data } = await axios.get('http://localhost:5000/api/admin/courses', {
+                const { data } = await axios.get(`${API_BASE_URL}/admin/courses`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setCourses(data);
@@ -45,7 +46,7 @@ const Settings = () => {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5000/api/admin/courses', editingCourse, {
+            await axios.post(`${API_BASE_URL}/admin/courses`, editingCourse, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert('Course updated successfully! AI Mentor prompt updated.');
