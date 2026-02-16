@@ -10,7 +10,14 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ['https://corenova-ai-mentor-pro-arag.vercel.app', 'http://localhost:5173'],
+  credentials: true
+}));
+
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working correctly' });
+});
 
 app.get('/', (req, res) => {
   res.send('CoreNova AI Mentor Pro API is running');
